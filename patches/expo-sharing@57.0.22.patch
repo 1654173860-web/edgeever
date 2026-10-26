@@ -1,9 +1,15 @@
 diff --git a/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt b/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt
 --- a/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt
 +++ b/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt
-@@ -5,10 +5,15 @@
+@@ -1,14 +1,21 @@
+ package expo.modules.sharing
+ 
++import android.app.Activity
+ import android.content.Intent
+ import android.content.Context
  import android.net.Uri
  import android.os.Build
++import android.os.Bundle
  import android.os.Parcelable
 +import androidx.core.content.FileProvider
  import androidx.core.net.toUri
@@ -17,7 +23,7 @@ diff --git a/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt b/andr
  
  // Emits intent received event to JS. This is because the `SEND` and `SEND_MULTIPLE` intents
  // have no uri and do not inform the navigation libraries of a native intent.
-@@ -32,22 +37,100 @@
+@@ -32,24 +39,102 @@
  // Emits intent received event to JS. This is because the `SEND` and `SEND_MULTIPLE` intents
  // do not navigation libraries of a native intent. This aligns the behaviour with ios.
  internal fun emitShareIntentReceived(reactActivity: ReactActivity, originalIntent: Intent) {
@@ -107,8 +113,8 @@ diff --git a/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt b/andr
 +  // history launch, not a new share, even after the JS process has been killed.
 +  return intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY == 0 &&
 +    intent.type != null && allowedShareActions.contains(intent.action)
-+}
-+
+ }
+ 
 +internal fun getShareIntentUris(intent: Intent): List<Uri> {
 +  val streams = when (intent.action) {
 +    Intent.ACTION_SEND -> listOfNotNull(intent.getParcelableExtraCompat<Uri>(Intent.EXTRA_STREAM))
@@ -121,21 +127,15 @@ diff --git a/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt b/andr
 +
 +  val clipData = intent.clipData ?: return emptyList()
 +  return (0 until clipData.itemCount).mapNotNull { index -> clipData.getItemAt(index).uri }
- }
- 
- internal inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
-diff --git a/android/src/main/java/expo/modules/sharing/ShareReceiverActivity.kt b/android/src/main/java/expo/modules/sharing/ShareReceiverActivity.kt
-new file mode 100644
---- /dev/null
-+++ b/android/src/main/java/expo/modules/sharing/ShareReceiverActivity.kt
-@@ -0,0 +1,52 @@
-+package expo.modules.sharing
++}
 +
-+import android.app.Activity
-+import android.content.Context
-+import android.content.Intent
-+import android.net.Uri
-+import android.os.Bundle
+ internal inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
+   return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+     getParcelableExtra(name, T::class.java)
+@@ -70,3 +155,48 @@
+ 
+ internal val URL.lastPathComponent: String
+   get() = path.removeSuffix("/").substringAfterLast('/')
 +
 +/**
 + * Receives ACTION_SEND while the singleTask host is dead.

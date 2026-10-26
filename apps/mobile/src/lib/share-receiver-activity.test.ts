@@ -73,12 +73,13 @@ describe("Android share receiver manifest", () => {
 
 test("share receiver copies a cold-start payload before opening the host", () => {
   const source = readFileSync(
-    new URL("../../node_modules/expo-sharing/android/src/main/java/expo/modules/sharing/ShareReceiverActivity.kt", import.meta.url),
+    new URL("../../node_modules/expo-sharing/android/src/main/java/expo/modules/sharing/ShareIntoUtils.kt", import.meta.url),
     "utf8",
   );
-  const copy = source.indexOf("materializeShareIntent");
-  const publish = source.indexOf("publishSharedIntent");
-  const open = source.indexOf("openShareHost");
+  const body = source.slice(source.indexOf("class ShareReceiverActivity"));
+  const copy = body.indexOf("materializeShareIntent");
+  const publish = body.indexOf("publishSharedIntent");
+  const open = body.indexOf("openShareHost");
   expect(copy).toBeGreaterThan(-1);
   expect(publish).toBeGreaterThan(copy);
   expect(open).toBeGreaterThan(publish);
