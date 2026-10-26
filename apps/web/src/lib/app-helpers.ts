@@ -157,6 +157,7 @@ export const MEMO_LIST_DENSITY_STORAGE_KEY = "edgeever.memoListDensity";
 export const MEMO_LIST_WIDTH_STORAGE_KEY = "edgeever.memoListWidth";
 export const NOTEBOOK_SORT_STORAGE_KEY = "edgeever.notebookSort";
 export const NOTEBOOK_TREE_COLLAPSED_IDS_STORAGE_KEY = "edgeever.notebookTreeCollapsedIds:v1";
+export const NOTEBOOK_SECTION_COLLAPSED_STORAGE_KEY = "edgeever.notebookSectionCollapsed";
 export const SHORTCUT_SETTINGS_STORAGE_KEY = "edgeever.shortcutSettings";
 export const DEFAULT_MEMO_LIST_WIDTH_PX = 360;
 export const MIN_MEMO_LIST_WIDTH_PX = 300;
@@ -548,6 +549,22 @@ export const readNotebookTreeCollapsedIdsPreference = () => {
 export const writeNotebookTreeCollapsedIdsPreference = (notebookIds: Iterable<string>) => {
   try {
     window.localStorage.setItem(NOTEBOOK_TREE_COLLAPSED_IDS_STORAGE_KEY, JSON.stringify(Array.from(new Set(notebookIds))));
+  } catch {
+    // Local storage can be unavailable in private or restricted browser contexts.
+  }
+};
+
+export const readNotebookSectionCollapsedPreference = () => {
+  try {
+    return window.localStorage.getItem(NOTEBOOK_SECTION_COLLAPSED_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
+export const writeNotebookSectionCollapsedPreference = (collapsed: boolean) => {
+  try {
+    window.localStorage.setItem(NOTEBOOK_SECTION_COLLAPSED_STORAGE_KEY, collapsed ? "true" : "false");
   } catch {
     // Local storage can be unavailable in private or restricted browser contexts.
   }

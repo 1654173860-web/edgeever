@@ -20,6 +20,7 @@ import {
   MAX_MEMO_LIST_WIDTH_PX,
   MIN_EDITOR_WIDTH_PX,
   NOTEBOOK_SORT_STORAGE_KEY,
+  NOTEBOOK_SECTION_COLLAPSED_STORAGE_KEY,
   NOTEBOOK_TREE_COLLAPSED_IDS_STORAGE_KEY,
   SHORTCUT_SETTINGS_STORAGE_KEY,
   getSearchShortcutScope,
@@ -37,6 +38,7 @@ import {
   getNotebookSortComparator,
   readEditorContentAlignmentPreference,
   readNotebookSortPreference,
+  readNotebookSectionCollapsedPreference,
   readNotebookTreeCollapsedIdsPreference,
   readDesktopFocusModePreference,
   readDesktopReadingProtectionPreference,
@@ -50,6 +52,7 @@ import {
   readShortcutSettingsPreference,
   writeEditorContentAlignmentPreference,
   writeNotebookSortPreference,
+  writeNotebookSectionCollapsedPreference,
   writeNotebookTreeCollapsedIdsPreference,
   writeDesktopFocusModePreference,
   writeDesktopReadingProtectionPreference,
@@ -513,6 +516,19 @@ describe("notebook tree collapsed preference", () => {
 
     expect(readNotebookTreeCollapsedIdsPreference()).toEqual(new Set());
     expect(() => writeNotebookTreeCollapsedIdsPreference(["notebook-1"])).not.toThrow();
+  });
+
+  test("remembers whether the notebook section itself is collapsed", () => {
+    const values = installLocalStorage();
+
+    expect(readNotebookSectionCollapsedPreference()).toBe(false);
+
+    writeNotebookSectionCollapsedPreference(true);
+    expect(values.get(NOTEBOOK_SECTION_COLLAPSED_STORAGE_KEY)).toBe("true");
+    expect(readNotebookSectionCollapsedPreference()).toBe(true);
+
+    writeNotebookSectionCollapsedPreference(false);
+    expect(readNotebookSectionCollapsedPreference()).toBe(false);
   });
 });
 

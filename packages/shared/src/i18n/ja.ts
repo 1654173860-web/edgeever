@@ -932,6 +932,8 @@ export const ja = {
     profile: "プロフィール",
     collapseSidebar: "ノートブック欄を閉じる",
     expandSidebar: "ノートブック欄を開く",
+    collapseNotebooks: "ノートブックを閉じる",
+    expandNotebooks: "ノートブックを開く",
     trash: "ゴミ箱",
     emptyTrash: "ゴミ箱を空にする",
     empty: "空にする",

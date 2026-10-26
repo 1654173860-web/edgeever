@@ -943,6 +943,8 @@ export const zhCN = {
     profile: "个人中心",
     collapseSidebar: "收起笔记本栏",
     expandSidebar: "展开笔记本栏",
+    collapseNotebooks: "收起笔记本",
+    expandNotebooks: "展开笔记本",
     trash: "回收站",
     emptyTrash: "清空回收站",
     empty: "清空",

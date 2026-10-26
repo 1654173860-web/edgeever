@@ -943,6 +943,8 @@ export const ru = {
     profile: "Профиль",
     collapseSidebar: "Свернуть панель блокнотов",
     expandSidebar: "Развернуть панель блокнотов",
+    collapseNotebooks: "Свернуть блокноты",
+    expandNotebooks: "Развернуть блокноты",
     trash: "Корзина",
     emptyTrash: "Очистить корзину",
     empty: "Пусто",

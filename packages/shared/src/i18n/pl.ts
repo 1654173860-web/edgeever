@@ -932,6 +932,8 @@ export const pl = {
     profile: "Profil",
     collapseSidebar: "Zwiń panel notatników",
     expandSidebar: "Rozwiń panel notatników",
+    collapseNotebooks: "Zwiń notatniki",
+    expandNotebooks: "Rozwiń notatniki",
     trash: "Kosz",
     emptyTrash: "Opróżnij kosz",
     empty: "Pusto",

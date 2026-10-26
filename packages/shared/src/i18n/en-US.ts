@@ -943,6 +943,8 @@ export const enUS = {
     profile: "Profile",
     collapseSidebar: "Collapse notebook pane",
     expandSidebar: "Expand notebook pane",
+    collapseNotebooks: "Collapse notebooks",
+    expandNotebooks: "Expand notebooks",
     trash: "Trash",
     emptyTrash: "Empty trash",
     empty: "Empty",
