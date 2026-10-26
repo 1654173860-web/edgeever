@@ -27,6 +27,7 @@ export const zhCN = {
     "bothTarget": "图标和名称",
     "preview": "预览",
     "reset": "恢复默认",
+    "confirm": "确认",
     "invalidColor": "请输入六位 HEX 颜色，例如 #2563eb。",
     "empty": "没有匹配的图标。",
     "contrast": "颜色会根据明暗主题调整以确保清晰。",

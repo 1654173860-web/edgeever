@@ -27,6 +27,7 @@ export const enUS = {
     "bothTarget": "Icon and name",
     "preview": "Preview",
     "reset": "Reset to default",
+    "confirm": "Confirm",
     "invalidColor": "Enter a six-digit HEX color, for example #2563eb.",
     "empty": "No matching icons.",
     "contrast": "Colors adapt for readability in light and dark mode.",

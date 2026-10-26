@@ -27,6 +27,7 @@ export const ja = {
     "bothTarget": "アイコンと名前",
     "preview": "プレビュー",
     "reset": "既定に戻す",
+    "confirm": "確認",
     "invalidColor": "6桁のHEXカラーを入力してください（例：#2563eb）。",
     "empty": "該当するアイコンはありません。",
     "contrast": "テーマに合わせて読みやすい色に調整されます。",

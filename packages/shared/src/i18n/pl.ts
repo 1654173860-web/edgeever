@@ -27,6 +27,7 @@ export const pl = {
     "bothTarget": "Ikony i nazwy",
     "preview": "Podgląd",
     "reset": "Przywróć domyślne",
+    "confirm": "Potwierdź",
     "invalidColor": "Wpisz sześciocyfrowy kolor HEX, np. #2563eb.",
     "empty": "Brak pasujących ikon.",
     "contrast": "Kolory dostosowują się do jasnego i ciemnego motywu.",
