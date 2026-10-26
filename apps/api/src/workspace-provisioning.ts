@@ -45,7 +45,7 @@ export type DefaultNotebookRow = {
   id: string;
   name: string;
   slug: string;
-  color: string;
+  color: string | null;
   sortOrder: number;
 };
 
