@@ -2077,6 +2077,10 @@ export const pl = {
       unavailable: "System nie mógł zarejestrować skrótu. Wybierz inną kombinację lub sprawdź ustawienia systemowe.",
       saveFailed: "Nie udało się zapisać skrótu. Spróbuj ponownie.",
     },
+    screenshot: {
+      label: "Zrzut ekranu do notatki",
+      description: "Działa także w innych aplikacjach. Naciśnij skrót, zaznacz obszar, a zrzut zostanie zapisany jako notatka. Skrót jest zapisany tylko na tym urządzeniu.",
+    },
     title: "Skróty klawiszowe",
     manage: "Zarządzaj",
     description: "Ustaw kombinacje klawiszy dla częstych działań na notatkach. Naciśnij Esc, aby przerwać nagrywanie.",

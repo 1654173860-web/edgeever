@@ -2088,6 +2088,10 @@ export const zhCN = {
       unavailable: "系统未能注册这个快捷键。请换一个组合键，或检查系统快捷键设置。",
       saveFailed: "无法保存快捷键，请重试。",
     },
+    screenshot: {
+      label: "截取屏幕到笔记",
+      description: "在其他应用中也可使用。按下后拖拽选择区域，截图会直接创建为笔记。此快捷键只保存在当前设备。",
+    },
     title: "绑定快捷键",
     manage: "管理",
     description: "为常用笔记动作设置组合键。按 Esc 可取消当前录制。",

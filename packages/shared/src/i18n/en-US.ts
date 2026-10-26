@@ -2088,6 +2088,10 @@ export const enUS = {
       unavailable: "The system could not register this shortcut. Choose another combination or check system shortcut settings.",
       saveFailed: "The shortcut could not be saved. Try again.",
     },
+    screenshot: {
+      label: "Capture screen to note",
+      description: "Works from other apps. Press it, drag a region, and the screenshot becomes a note. Saved only on this device.",
+    },
     title: "Keyboard shortcuts",
     manage: "Manage",
     description: "Set key combinations for common note actions. Press Esc to cancel recording.",
