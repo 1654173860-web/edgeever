@@ -177,6 +177,7 @@ import {
   EDITOR_LOCAL_SAVE_DELAY_MS,
   formatShortcutBinding,
   getEditableMemoTitle,
+  isPrimaryModifierPressed,
   getNotebookMoveOptions,
   readDesktopReadingProtectionPreference,
   readEditorOutlineCollapsedPreference,
@@ -1317,7 +1318,8 @@ const RichEditorPane = ({
         }
 
         const shortcutKey = event.key.toLowerCase();
-        if ((event.ctrlKey || event.metaKey) && !event.altKey && !event.shiftKey && shortcutKey === "k") {
+        // Command on Apple, Control elsewhere. Control stays free for macOS text movement.
+        if (isPrimaryModifierPressed(event) && !event.altKey && !event.shiftKey && shortcutKey === "k") {
           event.preventDefault();
           openExternalLinkDialogRef.current();
           return true;
@@ -1325,7 +1327,7 @@ const RichEditorPane = ({
 
         if (
           (shortcutKey !== "f" && shortcutKey !== "h") ||
-          (!event.ctrlKey && !event.metaKey) ||
+          !isPrimaryModifierPressed(event) ||
           event.altKey ||
           (shortcutKey === "f" && event.shiftKey)
         ) {

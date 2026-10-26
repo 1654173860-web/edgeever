@@ -7,6 +7,7 @@ import {
   formatShortcutBinding,
   getShortcutActionOptions,
   getShortcutActionForEvent,
+  resolvedShortcutModifiers,
   shortcutBindingFromKeyboardEvent,
   shortcutBindingsEqual,
 } from "@/lib/app-helpers";
@@ -46,11 +47,14 @@ const formatGlobalBinding = (binding: DesktopGlobalShortcutBinding) => {
   return parts.join(isMac ? "" : " + ");
 };
 
-const globalBindingMatchesLocal = (global: DesktopGlobalShortcutBinding, local: ShortcutBinding) =>
-  global.key === local.key
-  && (global.ctrl || global.meta) === local.ctrlOrMeta
-  && global.alt === local.alt
-  && global.shift === local.shift;
+const globalBindingMatchesLocal = (global: DesktopGlobalShortcutBinding, local: ShortcutBinding) => {
+  const modifiers = resolvedShortcutModifiers(local);
+  return global.key === local.key
+    && global.ctrl === modifiers.ctrl
+    && global.meta === modifiers.meta
+    && global.alt === local.alt
+    && global.shift === local.shift;
+};
 
 export const ShortcutSettingsItem = ({ shortcutSettings, onShortcutSettingsChange }: ShortcutSettingsItemProps) => {
   const { t } = useTranslation();
