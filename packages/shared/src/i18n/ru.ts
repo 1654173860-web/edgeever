@@ -3071,6 +3071,7 @@ export const ru = {
     location: "Местоположение: {{location}}",
     lastSeen: "Последняя активность: {{time}}",
     signedIn: "Вход выполнен: {{time}}",
+    revokeCurrent: "Выйти",
     revokeDevice: "Выйти с устройства",
     revokeOthers: "Выйти со всех остальных устройств",
     revokeDeviceTitle: "Выйти с этого устройства?",

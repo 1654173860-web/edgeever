@@ -3060,6 +3060,7 @@ export const pl = {
     location: "Lokalizacja: {{location}}",
     lastSeen: "Ostatnia aktywność: {{time}}",
     signedIn: "Zalogowano: {{time}}",
+    revokeCurrent: "Wyloguj się",
     revokeDevice: "Wyloguj urządzenie",
     revokeOthers: "Wyloguj wszystkie inne urządzenia",
     revokeDeviceTitle: "Wylogować to urządzenie?",

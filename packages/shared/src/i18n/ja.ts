@@ -3060,6 +3060,7 @@ export const ja = {
     location: "場所：{{location}}",
     lastSeen: "最終利用：{{time}}",
     signedIn: "サインイン：{{time}}",
+    revokeCurrent: "サインアウト",
     revokeDevice: "端末をサインアウト",
     revokeOthers: "他のすべての端末をサインアウト",
     revokeDeviceTitle: "この端末をサインアウトしますか？",

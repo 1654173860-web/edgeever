@@ -3069,6 +3069,7 @@ export const zhCN = {
     location: "位置：{{location}}",
     lastSeen: "上次访问：{{time}}",
     signedIn: "登录时间：{{time}}",
+    revokeCurrent: "退出当前登录",
     revokeDevice: "退出此设备",
     revokeOthers: "退出其他所有设备",
     revokeDeviceTitle: "让此设备退出登录？",

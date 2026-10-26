@@ -3071,6 +3071,7 @@ export const enUS = {
     location: "Location: {{location}}",
     lastSeen: "Last active: {{time}}",
     signedIn: "Signed in: {{time}}",
+    revokeCurrent: "Sign out",
     revokeDevice: "Sign out device",
     revokeOthers: "Sign out all other devices",
     revokeDeviceTitle: "Sign out this device?",
