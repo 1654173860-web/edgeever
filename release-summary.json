@@ -1,5 +1,5 @@
 {
-  "version": "2.6.0",
+  "version": "2.7.0",
   "changes": {
     "en-US": [
       "On the web and desktop apps, each notebook can set its own icon, icon color, text color, bold text, and an inverted icon or inverted row. Colors can be a preset or a six-digit HEX value. The settings are included in sync and backups. Existing notebooks keep their current appearance, and no manual migration is required. Thanks @thorufur for #673.",
