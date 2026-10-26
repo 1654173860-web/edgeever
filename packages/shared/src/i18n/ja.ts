@@ -14,7 +14,6 @@ export const ja = {
     iconColor: "アイコンの色",
     textColor: "テキストの色",
     "title": "外観",
-    "description": "このノートブックの外観を変更します。保存後に反映されます。",
     "icon": "アイコン",
     "search": "アイコンを検索（英語・ドイツ語）",
     "all": "すべて",

@@ -21,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -97,6 +96,7 @@ export const NotebookAppearanceDialog = ({
       }}
     >
       <DialogContent
+        aria-describedby={undefined}
         className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-[520px] gap-0 overflow-hidden p-0"
         showCloseButton={!saving}
         onEscapeKeyDown={(event) => {
@@ -111,9 +111,6 @@ export const NotebookAppearanceDialog = ({
             <Palette className="h-5 w-5 text-slate-700" />
             {t("notebookAppearance.title")}
           </DialogTitle>
-          <DialogDescription className="pt-1 leading-5">
-            {t("notebookAppearance.description")}
-          </DialogDescription>
         </DialogHeader>
         <form onSubmit={save} className="min-h-0 overflow-y-auto">
           <fieldset

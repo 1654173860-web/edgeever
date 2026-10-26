@@ -14,7 +14,6 @@ export const pl = {
     iconColor: "Kolor ikony",
     textColor: "Kolor tekstu",
     "title": "Wygląd",
-    "description": "Dostosuj ten notatnik. Zmiany zostaną zastosowane po zapisaniu.",
     "icon": "Ikona",
     "search": "Szukaj ikon (angielski lub niemiecki)",
     "all": "Wszystkie",

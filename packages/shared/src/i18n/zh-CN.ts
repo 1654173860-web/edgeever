@@ -14,7 +14,6 @@ export const zhCN = {
     iconColor: "图标颜色",
     textColor: "文字颜色",
     "title": "外观",
-    "description": "自定义此笔记本，保存后生效。",
     "icon": "图标",
     "search": "搜索图标（英文或德文）",
     "all": "全部",

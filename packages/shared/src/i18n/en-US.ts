@@ -14,7 +14,6 @@ export const enUS = {
     iconColor: "Icon color",
     textColor: "Text color",
     "title": "Appearance",
-    "description": "Customize this notebook. Changes apply only after saving.",
     "icon": "Icon",
     "search": "Search icons (English or German)",
     "all": "All",
