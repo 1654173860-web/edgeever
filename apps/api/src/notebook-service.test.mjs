@@ -304,20 +304,23 @@ describe("notebook appearance", () => {
         sqlite.exec(readFileSync(file, "utf8"));
       }
       sqlite.exec("UPDATE notebooks SET icon = 'network', color = '#2563eb' WHERE id = 'nb_inbox'");
-      const before = sqlite.query("SELECT * FROM notebooks ORDER BY id").all();
+      // query() caches the statement, so SELECT * prepared before ALTER TABLE
+      // keeps the old columns. prepare() reads the schema after each migration.
+      const notebookRows = () => sqlite.prepare("SELECT * FROM notebooks ORDER BY id").all();
+      const before = notebookRows();
       const memoCount = sqlite.query("SELECT COUNT(*) AS count FROM memos").get();
       sqlite.exec(readFileSync("migrations/0073_notebook_appearance.sql", "utf8"));
-      const after = sqlite.query("SELECT * FROM notebooks ORDER BY id").all();
+      const after = notebookRows();
       expect(after).toEqual(before.map(row => ({ ...row, color_target: "icon" })));
       sqlite.exec(readFileSync("migrations/0074_notebook_bold.sql", "utf8"));
-      expect(sqlite.query("SELECT * FROM notebooks ORDER BY id").all()).toEqual(after.map(row => ({ ...row, is_bold: 0 })));
+      expect(notebookRows()).toEqual(after.map(row => ({ ...row, is_bold: 0 })));
       sqlite.exec(readFileSync("migrations/0075_notebook_text_color.sql", "utf8"));
-      const beforeInversion = sqlite.query("SELECT * FROM notebooks ORDER BY id").all();
+      const beforeInversion = notebookRows();
       sqlite.exec(readFileSync("migrations/0076_notebook_icon_inverted.sql", "utf8"));
-      expect(sqlite.query("SELECT * FROM notebooks ORDER BY id").all()).toEqual(beforeInversion.map(row => ({ ...row, icon_inverted: 0 })));
-      const beforeRowInversion = sqlite.query("SELECT * FROM notebooks ORDER BY id").all();
+      expect(notebookRows()).toEqual(beforeInversion.map(row => ({ ...row, icon_inverted: 0 })));
+      const beforeRowInversion = notebookRows();
       sqlite.exec(readFileSync("migrations/0077_notebook_row_inverted.sql", "utf8"));
-      expect(sqlite.query("SELECT * FROM notebooks ORDER BY id").all()).toEqual(beforeRowInversion.map(row => ({ ...row, row_inverted: 0 })));
+      expect(notebookRows()).toEqual(beforeRowInversion.map(row => ({ ...row, row_inverted: 0 })));
       expect(sqlite.query("SELECT COUNT(*) AS count FROM memos").get()).toEqual(memoCount);
       expect(sqlite.query("PRAGMA foreign_key_check").all()).toEqual([]);
     } finally { sqlite.close(); }
