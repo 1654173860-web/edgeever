@@ -2493,7 +2493,9 @@ export const ja = {
     resourceActions: {
       download: "ダウンロード",
       transcribe: "文字起こし",
-      saveAs: "エクスポート",
+      copy: "コピー",
+      copied: "コピーしました",
+      copyFailed: "コピーできませんでした。ダウンロードを使ってください",
       rename: "名前を変更",
       delete: "削除",
       unavailable: "リソースの同期が完了し、ノートが編集可能なときだけ使えます",

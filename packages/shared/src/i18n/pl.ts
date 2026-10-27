@@ -2493,7 +2493,9 @@ export const pl = {
     resourceActions: {
       download: "Pobierz",
       transcribe: "Transkrybuj",
-      saveAs: "Eksportuj",
+      copy: "Kopiuj",
+      copied: "Skopiowano",
+      copyFailed: "Nie udało się skopiować. Użyj pobierania",
       rename: "Zmień nazwę",
       delete: "Usuń",
       unavailable: "To działanie będzie dostępne po zsynchronizowaniu zasobu, gdy notatkę będzie można edytować",

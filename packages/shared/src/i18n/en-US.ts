@@ -2504,7 +2504,9 @@ export const enUS = {
     resourceActions: {
       download: "Download",
       transcribe: "Transcribe",
-      saveAs: "Export",
+      copy: "Copy",
+      copied: "Copied",
+      copyFailed: "Couldn't copy this file. Use Download instead.",
       rename: "Rename",
       delete: "Delete",
       unavailable: "This action is available after the resource has synced and the note is editable",

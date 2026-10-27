@@ -2504,7 +2504,9 @@ export const zhCN = {
     resourceActions: {
       download: "下载",
       transcribe: "转录",
-      saveAs: "导出",
+      copy: "复制",
+      copied: "已复制",
+      copyFailed: "复制失败，请使用下载",
       rename: "重命名",
       delete: "删除",
       unavailable: "资源同步完成且当前笔记可编辑后才能执行此操作",
