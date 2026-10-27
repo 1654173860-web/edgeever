@@ -3508,6 +3508,8 @@ export const enUS = {
     memoDetail: {
       closeImagePreview: "Close image preview",
       imageActionsHint: "Long press for image actions",
+      nextImage: "Next image",
+      previousImage: "Previous image",
       notSignedIn: "Not signed in.",
       noteActions: "Note actions",
       noteIdCopied: "Note ID copied",

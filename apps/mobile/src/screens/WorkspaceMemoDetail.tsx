@@ -1910,6 +1910,8 @@ export const MemoDetailModal = ({
                 }
                 currentIndex={imagePreview.index}
                 images={imagePreview.images}
+                nextImageLabel={getMobileCatalog(resolvedLocale).mobile.memoDetail.nextImage}
+                previousImageLabel={getMobileCatalog(resolvedLocale).mobile.memoDetail.previousImage}
                 onIndexChange={(nextIndex) => {
                   setImagePreview((previous) => {
                     if (!previous || !previous.images[nextIndex]) return previous;

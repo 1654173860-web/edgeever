@@ -3506,6 +3506,8 @@ export const zhCN = {
     memoDetail: {
       closeImagePreview: "关闭图片预览",
       imageActionsHint: "长按打开图片操作",
+      nextImage: "下一张",
+      previousImage: "上一张",
       notSignedIn: "未登录。",
       noteActions: "笔记操作",
       noteIdCopied: "笔记 ID 已复制",

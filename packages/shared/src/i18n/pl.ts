@@ -3497,6 +3497,8 @@ export const pl = {
     memoDetail: {
       closeImagePreview: "Zamknij podgląd obrazu",
       imageActionsHint: "Przytrzymaj, aby otworzyć działania na obrazie",
+      nextImage: "Następny obraz",
+      previousImage: "Poprzedni obraz",
       notSignedIn: "Nie zalogowano.",
       noteActions: "Działania na notatce",
       noteIdCopied: "Skopiowano ID notatki",

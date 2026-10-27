@@ -3497,6 +3497,8 @@ export const ja = {
     memoDetail: {
       closeImagePreview: "画像のプレビューを閉じる",
       imageActionsHint: "長押しで画像の操作を開きます",
+      nextImage: "次の画像",
+      previousImage: "前の画像",
       notSignedIn: "サインインしていません。",
       noteActions: "ノートの操作",
       noteIdCopied: "ノート ID をコピーしました",

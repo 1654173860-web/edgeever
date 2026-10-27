@@ -3508,6 +3508,8 @@ export const ru = {
     memoDetail: {
       closeImagePreview: "Закрыть просмотр изображения",
       imageActionsHint: "Удерживайте, чтобы открыть действия с изображением",
+      nextImage: "Следующее изображение",
+      previousImage: "Предыдущее изображение",
       notSignedIn: "Вход не выполнен.",
       noteActions: "Действия с заметкой",
       noteIdCopied: "ID заметки скопирован",

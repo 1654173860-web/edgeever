@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState, type ReactNode } from "react";
 import { PixelRatio, Pressable, StyleSheet, Text, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
@@ -19,7 +19,9 @@ type Props = {
   accessibilityLabel: string;
   currentIndex?: number;
   images?: PreviewImageItem[];
+  nextImageLabel: string;
   onIndexChange?: (index: number) => void;
+  previousImageLabel: string;
   onLongPress: () => void;
   renderImage: (onDimensions: (size: ImageSize) => void, resizeMultiplier: number) => ReactNode;
 };
@@ -29,8 +31,10 @@ export const ZoomableImagePreview = ({
   accessibilityLabel,
   currentIndex = 0,
   images,
+  nextImageLabel,
   onIndexChange,
   onLongPress,
+  previousImageLabel,
   renderImage,
 }: Props) => {
   const [viewport, setViewport] = useState<ImageSize>({ width: 0, height: 0 });
@@ -59,14 +63,18 @@ export const ZoomableImagePreview = ({
   const anchorX = useSharedValue(0);
   const anchorY = useSharedValue(0);
   const pinching = useSharedValue(false);
+  const opacity = useSharedValue(1);
   const maxScale = 32;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setImage({ width: 0, height: 0 });
     scale.value = 1;
     x.value = 0;
     y.value = 0;
     pinching.value = false;
+    // A completed swipe hides the outgoing image before this commit.
+    // Reveal only after the new source is in place.
+    opacity.value = 1;
   }, [currentSource, activeIndex]);
 
   useEffect(() => {
@@ -146,18 +154,24 @@ export const ZoomableImagePreview = ({
       const dir = resolveSwipeDirection(event.translationX, event.translationY, event.velocityX, event.velocityY);
       const nextIndex = resolveNextPreviewIndex(activeIndex, total, dir);
 
-      if (nextIndex !== activeIndex) {
+      if (nextIndex !== activeIndex && onIndexChange) {
         const isHorizontal = Math.abs(event.translationX) >= Math.abs(event.translationY);
+        // Hide first, then recenter. Resetting while visible paints the
+        // outgoing image in the middle before React swaps the source.
         if (isHorizontal) {
           const targetX = dir === "next" ? -viewport.width : viewport.width;
-          x.value = withTiming(targetX, { duration: 150 }, () => {
+          x.value = withTiming(targetX, { duration: 150 }, (finished) => {
+            if (finished === false) return;
+            opacity.value = 0;
             x.value = 0;
             y.value = 0;
             runOnJS(onIndexChange)(nextIndex);
           });
         } else {
           const targetY = dir === "next" ? -viewport.height : viewport.height;
-          y.value = withTiming(targetY, { duration: 150 }, () => {
+          y.value = withTiming(targetY, { duration: 150 }, (finished) => {
+            if (finished === false) return;
+            opacity.value = 0;
             x.value = 0;
             y.value = 0;
             runOnJS(onIndexChange)(nextIndex);
@@ -183,6 +197,7 @@ export const ZoomableImagePreview = ({
 
   const gesture = Gesture.Race(Gesture.Simultaneous(pinch, pan), doubleTap, longPress);
   const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
     transform: [{ translateX: x.value }, { translateY: y.value }, { scale: scale.value }],
   }));
 
@@ -206,7 +221,7 @@ export const ZoomableImagePreview = ({
         <>
           {activeIndex > 0 ? (
             <Pressable
-              accessibilityLabel="Previous image"
+              accessibilityLabel={previousImageLabel}
               accessibilityRole="button"
               onPress={() => onIndexChange(activeIndex - 1)}
               style={[styles.navButton, styles.navButtonLeft]}
@@ -216,7 +231,7 @@ export const ZoomableImagePreview = ({
           ) : null}
           {activeIndex < total - 1 ? (
             <Pressable
-              accessibilityLabel="Next image"
+              accessibilityLabel={nextImageLabel}
               accessibilityRole="button"
               onPress={() => onIndexChange(activeIndex + 1)}
               style={[styles.navButton, styles.navButtonRight]}
@@ -239,28 +254,13 @@ export const ZoomableImagePreview = ({
               onLongPress();
               return;
             }
-            if (nativeEvent.actionName === "increment") {
-              if (scale.value <= 1 && total > 1 && onIndexChange && activeIndex < total - 1) {
-                onIndexChange(activeIndex + 1);
-                return;
-              }
-              const next = Math.min(maxScale, scale.value * 2);
-              x.value = clampImageTranslation(x.value * next / scale.value, fitted.width, viewport.width, next);
-              y.value = clampImageTranslation(y.value * next / scale.value, fitted.height, viewport.height, next);
-              scale.value = next;
-              return;
-            }
-            if (nativeEvent.actionName === "decrement") {
-              if (scale.value <= 1 && total > 1 && onIndexChange && activeIndex > 0) {
-                onIndexChange(activeIndex - 1);
-                return;
-              }
-              const next = Math.max(1, scale.value / 2);
-              x.value = clampImageTranslation(x.value * next / scale.value, fitted.width, viewport.width, next);
-              y.value = clampImageTranslation(y.value * next / scale.value, fitted.height, viewport.height, next);
-              scale.value = next;
-              return;
-            }
+            if (nativeEvent.actionName !== "increment" && nativeEvent.actionName !== "decrement") return;
+            const next = nativeEvent.actionName === "increment"
+              ? Math.min(maxScale, scale.value * 2)
+              : Math.max(1, scale.value / 2);
+            x.value = clampImageTranslation(x.value * next / scale.value, fitted.width, viewport.width, next);
+            y.value = clampImageTranslation(y.value * next / scale.value, fitted.height, viewport.height, next);
+            scale.value = next;
           }}
           onLayout={(event) => setViewport(event.nativeEvent.layout)}
           style={styles.viewport}
