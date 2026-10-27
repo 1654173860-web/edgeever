@@ -460,7 +460,9 @@ describe("Cloudflare deployment entrypoints", () => {
     expect(workflow).toContain("bun run db:migrate:local");
     expect(bunConfig.test.pathIgnorePatterns).toContain("tests/e2e/**");
     expect(scripts.test).toBe("bun run test:bulk && bun run test:integration");
-    expect(scripts["test:bulk"]).toContain("--path-ignore-patterns='tests/e2e/**'");
+    for (const pattern of bunConfig.test.pathIgnorePatterns) {
+      expect(scripts["test:bulk"]).toContain(`--path-ignore-patterns='${pattern}'`);
+    }
     expect(scripts["test:bulk"]).toContain("apps/api/src/companion-learning.test.mjs");
     expect(scripts["test:bulk"]).toContain("apps/api/src/resource-upload-integration.test.mjs");
     expect(scripts["test:bulk"]).toContain("apps/desktop/src/main/workbuddy-auth.test.mjs");
