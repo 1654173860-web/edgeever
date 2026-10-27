@@ -1,9 +1,9 @@
 {
-  "version": "2.10.0",
+  "version": "2.11.0",
   "changes": {
     "en-US": [
-      "Desktop adds scheduled local backups, optional password encryption, recovery, and backup file management (@sivdead, #684).",
-      "Single-note shares support readable custom addresses, with share actions wrapping on narrow windows (@dkoryto, #692, #695).",
+      "Desktop adds scheduled local backups, optional password encryption, recovery, and backup file management (#650; @sivdead, #684).",
+      "Single-note shares support readable custom addresses, with share actions wrapping on narrow windows (#691; @dkoryto, #692, #695).",
       "Public share pages include note text directly and support Markdown access for readers and tools.",
       "Android fullscreen image previews support swiping between images and avoid flashing the previous image (@CottonChou, #687).",
       "Improve Android translations across the editor, AI assistant, settings, and update prompts (@dkoryto, #603).",
@@ -12,8 +12,8 @@
       "Hide the image gallery editing toolbar in iOS view mode (@dkoryto, #689)."
     ],
     "zh-CN": [
-      "桌面端新增定时本地备份、可选密码加密与恢复，支持查看和管理备份文件（@sivdead，#684）。",
-      "单篇笔记分享支持自定义易读地址，窄窗口下分享操作自动换行（@dkoryto，#692、#695）。",
+      "桌面端新增定时本地备份、可选密码加密与恢复，支持查看和管理备份文件（#650；@sivdead，#684）。",
+      "单篇笔记分享支持自定义易读地址，窄窗口下分享操作自动换行（#691；@dkoryto，#692、#695）。",
       "公开分享页面直接提供笔记正文，并支持以 Markdown 读取，便于阅读和工具访问。",
       "Android 全屏图片预览支持左右滑动切换，并修复切换时旧图片闪现（@CottonChou，#687）。",
       "完善 Android 编辑器、AI 助手、设置与更新提示的多语言显示（@dkoryto，#603）。",
