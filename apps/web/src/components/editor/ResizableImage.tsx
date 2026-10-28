@@ -16,6 +16,7 @@ import { createMarkdownImagePasteRule } from "@/lib/markdown-image-paste";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { isImageInGallery } from "./image-editing-context";
+import { createImageSelectionPlugin, imageSelectionKey } from "./image-selection";
 
 export type ImageMenuRequestDetail = {
   element: HTMLElement;
@@ -51,14 +52,15 @@ const ResizableImageNodeView = ({
   const width = previewWidth ?? nodeWidth;
   const explicitAlignment = parseImageAlignment(node.attrs.alignment);
   const alignment = explicitAlignment ?? "left";
-  const { editable, inGallery } = useEditorState({
+  const { editable, inGallery, explicitlySelected } = useEditorState({
     editor,
     selector: ({ editor: activeEditor }) => ({
       editable: activeEditor.isEditable,
       inGallery: isImageInGallery(activeEditor.state.doc, getPos()),
+      explicitlySelected: imageSelectionKey.getState(activeEditor.state) === getPos(),
     }),
   });
-  const showSizeControls = editable && selected && !inGallery;
+  const showSizeControls = editable && selected && explicitlySelected && !inGallery;
   const alt = typeof node.attrs.alt === "string" ? node.attrs.alt : "";
   const title = typeof node.attrs.title === "string" ? node.attrs.title : "";
   const src = typeof node.attrs.src === "string" ? node.attrs.src : "";
@@ -235,11 +237,10 @@ const ResizableImageNodeView = ({
     <NodeViewWrapper
       ref={wrapperRef}
       as="figure"
-      className={cn("edgeever-image-node", selected && "is-selected")}
+      className={cn("edgeever-image-node", showSizeControls && "is-selected")}
       style={{ width: `${width}%`, ...(explicitAlignment ? imageAlignmentMargins(explicitAlignment) : {}) }}
       data-width={width}
       data-image-align={alignment}
-      onMouseEnter={showSizeControls ? undefined : requestImageMenu}
       onMouseLeave={hideImageMenu}
       onContextMenu={(event: MouseEvent<HTMLElement>) => {
         event.preventDefault();
@@ -260,7 +261,10 @@ const ResizableImageNodeView = ({
           // A positioned figure does not occupy the full block wrapper. Select
           // its node explicitly instead of relying on coordinate hit testing.
           event.preventDefault();
-          editor.chain().focus().setNodeSelection(position).run();
+          editor.chain().focus().setNodeSelection(position).command(({ tr }) => {
+            tr.setMeta(imageSelectionKey, position);
+            return true;
+          }).run();
         }}
         onDoubleClick={(event) => {
           event.preventDefault();
@@ -347,6 +351,9 @@ const ResizableImageNodeView = ({
 };
 
 export const ResizableImage = Image.extend({
+  addProseMirrorPlugins() {
+    return [...(this.parent?.() ?? []), createImageSelectionPlugin()];
+  },
   addPasteRules() {
     return [createMarkdownImagePasteRule(this.type)];
   },
