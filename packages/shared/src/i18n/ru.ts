@@ -2018,7 +2018,7 @@ export const ru = {
     directory: "Папка резервных копий",
     choose: "Выбрать…",
     frequency: "Частота",
-    retention: "Хранить",
+    retention: "Хранить последние",
     copies: "Копий: {{count}}",
     intervals: {
       daily: "Ежедневно",

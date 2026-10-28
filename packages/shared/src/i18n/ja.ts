@@ -2007,7 +2007,7 @@ export const ja = {
     directory: "保存先",
     choose: "選択…",
     frequency: "頻度",
-    retention: "保存数",
+    retention: "直近を保持",
     copies: "{{count}} 件",
     intervals: {
       daily: "毎日",

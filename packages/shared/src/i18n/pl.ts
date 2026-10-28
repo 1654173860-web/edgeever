@@ -2007,7 +2007,7 @@ export const pl = {
     directory: "Folder kopii",
     choose: "Wybierz…",
     frequency: "Częstotliwość",
-    retention: "Zachowaj",
+    retention: "Zachowaj ostatnie",
     copies: "{{count}} kopii",
     intervals: {
       daily: "Codziennie",

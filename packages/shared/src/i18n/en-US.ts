@@ -2018,7 +2018,7 @@ export const enUS = {
     directory: "Backup folder",
     choose: "Choose…",
     frequency: "Frequency",
-    retention: "Keep",
+    retention: "Keep recent",
     copies: "{{count}} backups",
     intervals: {
       daily: "Daily",

@@ -2018,7 +2018,7 @@ export const zhCN = {
     directory: "备份目录",
     choose: "选择…",
     frequency: "备份频率",
-    retention: "保留份数",
+    retention: "保留最近",
     copies: "{{count}} 份",
     intervals: {
       daily: "每天",
@@ -2098,7 +2098,7 @@ export const zhCN = {
       backup_worker_failed: "后台任务已停止，请重试。",
       backup_file_required: "请重新选择备份文件。",
       backup_import_not_ready: "请等待归档检查完成。",
-      backup_invalid_configuration: "请检查备份频率、保留份数与保存目录。",
+      backup_invalid_configuration: "请检查备份频率、保留设置与保存目录。",
       backup_failed: "备份失败，请检查网络与目录权限后重试。",
       backup_source_changed: "备份期间数据发生变化，请在停止编辑后重试。",
       backup_server_upgrade_required: "请升级 EdgeEver 服务端以使用自动备份。",
