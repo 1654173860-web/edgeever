@@ -196,7 +196,7 @@ struct TemplatePickerSheet: View {
                     }
 
                     if !galleryTemplates.isEmpty {
-                        sectionTitle(env.preferences.t("模板库", en: "Template Gallery", pl: "Galeria szablonów"))
+                        sectionTitle(env.preferences.t("模板库", en: "Template Gallery", ja: "テンプレートギャラリー", pl: "Galeria szablonów"))
                         ForEach(galleryTemplates) { template in
                             templateRow(template)
                         }
