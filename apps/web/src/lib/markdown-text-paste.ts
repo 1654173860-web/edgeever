@@ -58,8 +58,10 @@ export const pasteBlockMarkdown = (
   view: { state: EditorState; dispatch: (transaction: Transaction) => void },
   data: DataTransfer | null,
 ) => {
-  // ProseMirror tracks Shift for Cmd/Ctrl+Shift+V, which pastes the literal text.
-  if ((view as { input?: { shiftKey?: boolean } }).input?.shiftKey) return false;
+  // Match ProseMirror's plain-text paste check: Shift+Insert (45) is a normal
+  // paste, while Cmd/Ctrl+Shift+V keeps the literal text.
+  const input = (view as { input?: { shiftKey?: boolean; lastKeyCode?: number | null } }).input;
+  if (input?.shiftKey && input.lastKeyCode !== 45) return false;
   if (!data || !isPlainMarkdownSource(data)) return false;
   const { $from } = view.state.selection;
   if ($from.parent.type.spec.code) return false;

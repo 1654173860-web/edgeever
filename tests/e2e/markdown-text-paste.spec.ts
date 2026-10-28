@@ -27,10 +27,9 @@ const dispatchPaste = async (editor: Locator, entries: Record<string, string>) =
   }, entries);
 };
 
-const openMemo = async (page: Page, memo: { id: string }, title: string) => {
+const openMemo = async (page: Page, memo: { id: string }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "全部笔记", exact: true }).click();
-  await page.getByPlaceholder("搜索笔记").fill(title);
   await page.locator(`[data-memo-id="${memo.id}"]`).locator("button").first().click();
   const editor = page.locator(".ProseMirror[contenteditable='true']");
   await expect(editor).toBeEditable();
@@ -66,7 +65,7 @@ test("renders Markdown pasted as plain text in the rich-text editor", async ({ p
   const memo = await createMemo(page, title);
 
   try {
-    const editor = await openMemo(page, memo, title);
+    const editor = await openMemo(page, memo);
     await dispatchPaste(editor, { "text/plain": MARKDOWN });
 
     await expect(editor.locator("h1")).toHaveText("一级标题");
@@ -118,7 +117,7 @@ test("keeps escaped delimiters, paste as plain text and tables without outer pip
   const memo = await createMemo(page, title);
 
   try {
-    const editor = await openMemo(page, memo, title);
+    const editor = await openMemo(page, memo);
 
     // Escaped delimiters stay literal; paste rules do not parse the result again.
     await dispatchPaste(editor, { "text/plain": "# Escaped\n\n\\*not italic\\*\n\n\\`not code\\`" });
@@ -159,6 +158,51 @@ test("keeps escaped delimiters, paste as plain text and tables without outer pip
     await expect(editor.locator("h1")).toHaveCount(2);
     await expect(editor.locator("h1").nth(1)).toHaveText("vscode converted");
     await expect(editor.locator("ul > li")).toHaveCount(1);
+  } finally {
+    await deleteMemo(page, memo.id);
+  }
+});
+
+test("converts Shift+Insert Markdown pastes and keeps Ctrl+Shift+V literal", async ({ page }) => {
+  const title = `Markdown Shift+Insert ${Date.now()}`;
+  const memo = await createMemo(page, title);
+  try {
+    const editor = await openMemo(page, memo);
+    for (const vscode of [false, true]) {
+      const entries: Record<string, string> = { "text/plain": "# Insert heading\n- Insert item" };
+      if (vscode) {
+        entries["text/html"] = "<div># Insert heading</div>";
+        entries["vscode-editor-data"] = JSON.stringify({ mode: "markdown" });
+      }
+      // Deliver the shortcut key state without reading the host clipboard.
+      await editor.dispatchEvent("keydown", {
+        key: "Insert", code: "Insert", keyCode: 45, shiftKey: true,
+      });
+      await dispatchPaste(editor, entries);
+      await editor.dispatchEvent("keyup", { key: "Shift", code: "ShiftLeft", keyCode: 16 });
+      await expect(editor.locator("h1")).toHaveText("Insert heading");
+      await expect(editor.locator("ul > li")).toHaveText("Insert item");
+      await expect(editor).not.toContainText("# Insert heading");
+      await page.keyboard.press("ControlOrMeta+z");
+      await expect(editor).toHaveText("");
+      await page.keyboard.press("ControlOrMeta+Shift+z");
+      await expect(editor.locator("h1")).toHaveText("Insert heading");
+      await expect(editor.locator("ul > li")).toHaveText("Insert item");
+      await page.keyboard.press("ControlOrMeta+z");
+      await expect(editor).toHaveText("");
+
+      // Update the last key after Insert: Shift+V must still take the plain path.
+      await editor.dispatchEvent("keydown", {
+        key: "V", code: "KeyV", keyCode: 86, ctrlKey: true, shiftKey: true,
+      });
+      await dispatchPaste(editor, entries);
+      await editor.dispatchEvent("keyup", { key: "Shift", code: "ShiftLeft", keyCode: 16 });
+      await expect(editor).toContainText("# Insert heading");
+      await expect(editor).toContainText("- Insert item");
+      await expect(editor.locator("h1, ul")).toHaveCount(0);
+      await page.keyboard.press("ControlOrMeta+z");
+      await expect(editor).toHaveText("");
+    }
   } finally {
     await deleteMemo(page, memo.id);
   }

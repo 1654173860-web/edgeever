@@ -21,12 +21,13 @@ const clipboard = (entries) => ({
 
 // The unmounted Tiptap view throws on fields it does not have, such as
 // `input`, so tests pass the state, dispatch and Shift state ProseMirror keeps.
-const viewOf = (editor, shiftKey = false) => ({
+const viewOf = (editor, shiftKey = false, lastKeyCode = 86) => ({
   get state() { return editor.state; },
   dispatch: (transaction) => editor.view.dispatch(transaction),
-  input: { shiftKey },
+  input: { shiftKey, lastKeyCode },
 });
-const paste = (editor, entries, shiftKey) => pasteBlockMarkdown(viewOf(editor, shiftKey), clipboard(entries));
+const paste = (editor, entries, shiftKey, lastKeyCode) =>
+  pasteBlockMarkdown(viewOf(editor, shiftKey, lastKeyCode), clipboard(entries));
 
 // Excerpt of the sample attached to issue #660.
 const ISSUE_SAMPLE = `# 一级标题
@@ -173,5 +174,25 @@ describe("pasting plain-text Markdown in rich text", () => {
     expect(paste(editor, { "text/plain": "Name | Value\n--- | ---\na | b" })).toBe(true);
     expect(editor.getJSON().content.map((node) => node.type)).toContain("table");
     editor.destroy();
+  });
+
+  test("converts Shift+Insert pastes for plain text and VS Code Markdown", () => {
+    for (const entries of [
+      { "text/plain": "# title\n- item" },
+      {
+        "text/plain": "# title\n- item",
+        "text/html": "<div># title</div>",
+        "vscode-editor-data": JSON.stringify({ mode: "markdown" }),
+      },
+    ]) {
+      const editor = createEditor();
+      try {
+        expect(paste(editor, entries, true, 45)).toBe(true);
+        expect(editor.getJSON().content.map((node) => node.type)).toEqual(["heading", "bulletList"]);
+        expect(editor.getText()).not.toContain("# title");
+      } finally {
+        editor.destroy();
+      }
+    }
   });
 });
