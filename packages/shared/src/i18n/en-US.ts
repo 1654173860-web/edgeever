@@ -2796,6 +2796,8 @@ export const enUS = {
     outline: "Outline",
     showOutline: "Show outline",
     hideOutline: "Hide outline",
+    collapseAllOutline: "Collapse all headings",
+    expandAllOutline: "Expand all headings",
     collapseOutlineHeading: "Collapse {{name}}",
     expandOutlineHeading: "Expand {{name}}",
   },

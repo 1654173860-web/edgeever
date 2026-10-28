@@ -2785,6 +2785,8 @@ export const pl = {
     outline: "Konspekt",
     showOutline: "Pokaż konspekt",
     hideOutline: "Ukryj konspekt",
+    collapseAllOutline: "Zwiń wszystkie nagłówki",
+    expandAllOutline: "Rozwiń wszystkie nagłówki",
     collapseOutlineHeading: "Zwiń {{name}}",
     expandOutlineHeading: "Rozwiń {{name}}",
   },

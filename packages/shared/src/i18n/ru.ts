@@ -2796,6 +2796,8 @@ export const ru = {
     outline: "Оглавление",
     showOutline: "Показать оглавление",
     hideOutline: "Скрыть оглавление",
+    collapseAllOutline: "Свернуть все заголовки",
+    expandAllOutline: "Развернуть все заголовки",
     collapseOutlineHeading: "Свернуть {{name}}",
     expandOutlineHeading: "Развернуть {{name}}",
   },

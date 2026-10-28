@@ -4611,8 +4611,11 @@ const RichEditorPane = ({
               noteProse={noteProse}
             />
           )}
-          {showDocumentOutline && (
+          {showDocumentOutline && memo && hydratedEditorMemoId === memo.id && (
             <EditorOutline
+              key={memo.id}
+              memoId={memo.id}
+              editingMemoIdRef={editingMemoIdRef}
               editor={editor}
               scrollContainer={editorScrollContainer}
               collapsedAnchor={collapsedOutlineAnchor}

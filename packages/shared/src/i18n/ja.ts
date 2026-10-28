@@ -2785,6 +2785,8 @@ export const ja = {
     outline: "アウトライン",
     showOutline: "アウトラインを表示",
     hideOutline: "アウトラインを隠す",
+    collapseAllOutline: "すべての見出しを折りたたむ",
+    expandAllOutline: "すべての見出しを展開",
     collapseOutlineHeading: "{{name}} を閉じる",
     expandOutlineHeading: "{{name}} を開く",
   },

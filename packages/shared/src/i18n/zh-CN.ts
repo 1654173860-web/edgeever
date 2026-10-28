@@ -2794,6 +2794,8 @@ export const zhCN = {
     outline: "文档大纲",
     showOutline: "显示文档大纲",
     hideOutline: "隐藏文档大纲",
+    collapseAllOutline: "折叠全部标题",
+    expandAllOutline: "展开全部标题",
     collapseOutlineHeading: "收起 {{name}}",
     expandOutlineHeading: "展开 {{name}}",
   },
