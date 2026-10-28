@@ -10,6 +10,18 @@ import { canvasToPngBlob, downloadBlob } from "@/lib/infographic-image-export";
 const QR_DOWNLOAD_SIZE = 1024;
 const QR_DOWNLOAD_MARGIN = 4;
 
+export const shareQrCodePngBlob = (source: HTMLCanvasElement) => {
+  // QRCodeCanvas scales its backing store by devicePixelRatio. Export physical
+  // pixels at a fixed size regardless of screen density or browser zoom.
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = QR_DOWNLOAD_SIZE;
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("canvas");
+  context.imageSmoothingEnabled = false;
+  context.drawImage(source, 0, 0, QR_DOWNLOAD_SIZE, QR_DOWNLOAD_SIZE);
+  return canvasToPngBlob(canvas);
+};
+
 /** File name from the last path segment of the link: the custom address or the token. */
 export const shareQrCodeFileName = (url: string, extension: "png" | "svg") => {
   let segment = "";
@@ -33,7 +45,7 @@ export const ShareQrCode = ({ url, hint }: { url: string; hint: string }) => {
 
   const downloadPng = async () => {
     if (!canvasRef.current) return;
-    downloadBlob(await canvasToPngBlob(canvasRef.current), shareQrCodeFileName(url, "png"));
+    downloadBlob(await shareQrCodePngBlob(canvasRef.current), shareQrCodeFileName(url, "png"));
   };
 
   const downloadSvg = () => {
