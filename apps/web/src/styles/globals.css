@@ -885,6 +885,15 @@ html[data-edgeever-extension-theme] .edgeever-memo-divider {
   cursor: default;
 }
 
+/* Scroller grows the paper 200ms after node changes. During a drag, nodes can
+ * cross the paper's origin while still inside the visible scroll viewport.
+ * Let the outer scroller clip them; clipping either inner layer makes nodes
+ * disappear and lose hit-testing until the delayed resize catches up. */
+.edgeever-diagram-scroller .edgeever-diagram-canvas,
+.edgeever-diagram-scroller .edgeever-diagram-canvas > .x6-graph-svg {
+  overflow: visible;
+}
+
 .edgeever-diagram-canvas[data-space-pan="active"]:not([data-architecture-placement="active"]) {
   cursor: grab;
 }
