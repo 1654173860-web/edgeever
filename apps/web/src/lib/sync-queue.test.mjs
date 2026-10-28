@@ -400,8 +400,7 @@ describe("web sync conflict recovery", () => {
 test("replays offline appearance edits and explicit resets without dropping fields", async () => {
   const { createLocalNotebook, updateLocalNotebook, getLocalNotebook } = await import("./local-mirror.ts");
   const scope = createLocalDataScope("https://demo.edgeever.org", "appearance-user");
-  const notebook = { ...await createLocalNotebook(scope, { name: "Heimnetz" }), id: "nb_appearance" };
-  await localDb.notebooks.put({ ...notebook, scope });
+  const notebook = await createLocalNotebook(scope, { name: "Heimnetz" });
   const original = api.updateNotebook;
   const previousNavigator = globalThis.navigator;
   globalThis.navigator = { onLine: true };

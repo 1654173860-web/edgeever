@@ -1,4 +1,3 @@
-import { getMemoDisplayTitle } from "@edgeever/shared/memo-title";
 import { PUBLIC_PAGE_HEADERS, PUBLIC_PAGE_ROBOTS } from "@edgeever/shared/public-page-headers";
 import type { DatabaseAdapter } from "./storage-contract";
 import { getNotebookSite, publicTreeSql, resolveNotebookSiteToken } from "./notebook-site-service";
@@ -32,7 +31,7 @@ export const renderNotebookSitePage = async (
       .bind(site.token, selected).first<{ title: string | null; excerpt: string }>() : null;
     if (memoId && !note) status = 404;
     if (status === 200) {
-      title = `${getMemoDisplayTitle(note?.title, site.name)} · EdgeEver`;
+      title = `${note?.title?.trim() || site.name} · EdgeEver`;
       description = note?.excerpt || site.name;
       indexable = alias && site.settings.allowIndexing;
       const base = site.site_slug ? `/s/${encodeURIComponent(site.site_slug)}` : `/share/notebook/${encodeURIComponent(site.token)}`;
