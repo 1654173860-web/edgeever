@@ -19,6 +19,7 @@ import { IMAGE_GALLERY_NODE_TYPE, groupConsecutiveImagesIntoGalleries, normalize
 import { EMPTY_EXTERNAL_LINK_NODE_TYPE } from "./empty-external-link";
 import { FRONT_MATTER_LANGUAGE, createFrontMatterNode, getFrontMatterSource, splitMarkdownFrontMatter } from "./front-matter";
 import { splitMarkdownParseChunks } from "./markdown-block-start";
+import { createEdgeEverMarked } from "./markdown-options";
 
 export { PluginEmbed, PLUGIN_EMBED_NODE_TYPE, pluginEmbedToMarkdown, normalizePluginEmbedAttributes } from "./plugin-embed";
 export type { PluginEmbedAttributes } from "./plugin-embed";
@@ -104,6 +105,7 @@ export const emptyDoc = (): TiptapDoc => ({
 export const createEdgeEverMarkdownManager = (
   options: CreateEdgeEverDocumentExtensionsOptions,
 ) => new MarkdownManager({
+  marked: createEdgeEverMarked(),
   extensions: createEdgeEverDocumentExtensions({
     ...options,
     markdown: true,
