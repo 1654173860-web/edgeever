@@ -9,8 +9,8 @@ export const createImageSelectionPlugin = () => new Plugin<number | null>({
   state: {
     init: () => null,
     apply(transaction, previous) {
-      const requested = transaction.getMeta(imageSelectionKey) as number | undefined;
-      const position = requested ?? (previous === null ? null : transaction.mapping.map(previous));
+      const requested = transaction.getMeta(imageSelectionKey) as number | null | undefined;
+      const position = requested !== undefined ? requested : (previous === null ? null : transaction.mapping.map(previous));
       const selection = transaction.selection;
       return position !== null && selection instanceof NodeSelection &&
         selection.node.type.name === "image" && selection.from === position

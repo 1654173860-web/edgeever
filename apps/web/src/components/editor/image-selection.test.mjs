@@ -16,6 +16,14 @@ const clickImage = (state, position = 0) => state.apply(state.tr
   .setMeta(imageSelectionKey, position));
 
 describe("explicit image selection", () => {
+  test("dismisses controls without changing the note or the required node selection", () => {
+    const selected = clickImage(createState());
+    const dismissed = selected.apply(selected.tr.setMeta(imageSelectionKey, null));
+    expect(imageSelectionKey.getState(dismissed)).toBeNull();
+    expect(dismissed.doc).toBe(selected.doc);
+    expect(dismissed.selection).toBeInstanceOf(NodeSelection);
+    expect(imageSelectionKey.getState(clickImage(dismissed))).toBe(0);
+  });
   test("opening an image-only or image-first note does not activate image controls", () => {
     for (const content of [[image()], [image(), schema.nodes.paragraph.create()]]) {
       const state = createState(content);
